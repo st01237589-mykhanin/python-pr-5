@@ -64,3 +64,22 @@ def post_comment(request, post_id):
         comment.post = post
         comment.save()
     return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
+
+def post_detail(request, year, month, day, post):
+    post = get_object_or_404(Post,
+                             status=Post.Status.PUBLISHED,
+                             slug=post,
+                             publish__year=year,
+                             publish__month=month,
+                             publish__day=day)
+
+    # Список активних коментарів до цього посту
+    comments = post.comments.filter(active=True)
+    
+    # Форма для коментування користувачами
+    form = CommentForm()
+
+    return render(request, 'blog/post/detail.html',
+                  {'post': post,
+                   'comments': comments,
+                   'form': form})
