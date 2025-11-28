@@ -23,4 +23,5 @@ urlpatterns = [
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('blog/feed/', LatestPostsFeed(), name='post_feed'),
+    path('blog/search/', views.post_search, name='post_search'),
 ]
